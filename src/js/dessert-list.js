@@ -35,7 +35,7 @@ async function initDessertList() {
       ...categories,
     ];
     if (!allCategories.length) {
-      Notify.warning('Десерти не знайдені');
+      Notify.warning('Категорії не знайдені');
       return;
     }
     renderSelect(allCategories);
@@ -45,7 +45,10 @@ async function initDessertList() {
       page: currentPage,
       limit: LIMIT,
     });
-
+    if (!data.desserts.length) {
+      Notify.warning('Десерти не знайдені');
+      return;
+    }
     renderDesserts(data.desserts);
     const totalPages = Math.ceil(data.totalItems / LIMIT);
 
@@ -86,6 +89,13 @@ async function filterByCategory(event) {
 
     loadMoreBtn.classList.remove('is-hidden');
     loadMoreBtn.disabled = currentPage >= totalPages;
+
+    // if (currentPage >= totalPages) {
+    //   loadMoreBtn.disabled = true;
+    //   Notify.success('Десерти завантажено');
+    // } else {
+    //   loadMoreBtn.disabled = false;
+    // }
   } catch (error) {
     console.error(error);
     Notify.failure('Помилка завантаження');
@@ -137,7 +147,6 @@ function openDessertModal(event) {
   const card = btn.closest('.dessert-list-item');
   const id = card.dataset.id;
 
-  // Notify.success('Успешно');
   // openModal(id);
 }
 
@@ -156,8 +165,7 @@ function renderCategoriesBtn(arr) {
     .map(
       ({ name, _id }) => `
    <label for="${_id}" class="dessert-category-label">
-        <input
-        ${_id === 'all' ? 'checked' : ''}
+        <input ${_id === 'all' ? 'checked' : ''}
         id="${_id}" type="radio" name="category" 
         value="${_id}" class="dessert-category-input" />
         <span class="dessert-category-btn">

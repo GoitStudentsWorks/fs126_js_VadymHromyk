@@ -58,8 +58,6 @@ async function initDessertList() {
 
     if (currentPage >= totalPages) {
       loadMoreBtn.disabled = true;
-
-      showSuccess('Десерти завантажено');
     } else {
       loadMoreBtn.disabled = false;
     }
@@ -103,8 +101,6 @@ async function filterByCategory(event) {
 
     if (currentPage >= totalPages) {
       loadMoreBtn.disabled = true;
-
-      showSuccess('Десерти завантажено');
     } else {
       loadMoreBtn.disabled = false;
     }
@@ -150,8 +146,6 @@ async function loadMoreDesserts() {
 
     if (currentPage >= totalPages) {
       loadMoreBtn.disabled = true;
-
-      showSuccess('Десерти завантажено');
     } else {
       loadMoreBtn.disabled = false;
     }

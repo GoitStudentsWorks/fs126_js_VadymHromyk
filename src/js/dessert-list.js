@@ -38,14 +38,7 @@ async function initDessertList() {
       ...categories,
     ];
     if (!allCategories.length) {
-      iziToast.error({
-        titleColor: 'white',
-        position: 'topRight',
-        title: 'Error',
-        backgroundColor: 'red',
-        messageColor: 'white',
-        message: 'No images found for this query. Please try again.',
-      });
+      showError('Помилка завантаження');
       return;
     }
     renderSelect(allCategories);
@@ -56,30 +49,23 @@ async function initDessertList() {
       limit: LIMIT,
     });
     if (!data.desserts.length) {
-      iziToast.error({
-        titleColor: 'white',
-        position: 'topRight',
-        title: 'Error',
-        backgroundColor: 'red',
-        messageColor: 'white',
-        message: 'Something went wrong. Please try again later.',
-      });
+      showError('Помилка завантаження');
       return;
     }
     renderDesserts(data.desserts);
     const totalPages = Math.ceil(data.totalItems / LIMIT);
 
     loadMoreBtn.classList.remove('is-hidden');
-    loadMoreBtn.disabled = currentPage >= totalPages;
+    // loadMoreBtn.disabled = currentPage >= totalPages;
+    if (currentPage >= totalPages) {
+      loadMoreBtn.disabled = true;
+
+      showSuccess('Десерти завантажено');
+    } else {
+      loadMoreBtn.disabled = false;
+    }
   } catch (error) {
-    iziToast.error({
-      titleColor: 'white',
-      position: 'topRight',
-      title: 'Error',
-      backgroundColor: 'red',
-      messageColor: 'white',
-      message: 'Something went wrong. Please try again later.',
-    });
+    showError('Помилка завантаження');
   } finally {
     hideLoader();
   }
@@ -89,7 +75,10 @@ async function filterByCategory(event) {
   showLoader();
   hideLoadMoreBtn();
   currentCategory = event.target.value;
-  if (!currentCategory) return;
+  if (!currentCategory) {
+    showError('Помилка завантаження');
+    return;
+  }
 
   currentPage = 1;
   dessertContainer.innerHTML = '';
@@ -104,18 +93,11 @@ async function filterByCategory(event) {
     }
     const data = await getDesserts(params);
     if (!data.desserts.length) {
-      iziToast.error({
-        titleColor: 'white',
-        position: 'topRight',
-        title: 'Error',
-        backgroundColor: 'red',
-        messageColor: 'white',
-        message: 'Something went wrong. Please try again later.',
-      });
+      showError('Помилка завантаження');
       return;
     }
     renderDesserts(data.desserts);
-    // Notify.success('Десерти завантажено');
+
     const totalPages = Math.ceil(data.totalItems / LIMIT);
 
     loadMoreBtn.classList.remove('is-hidden');
@@ -123,27 +105,13 @@ async function filterByCategory(event) {
 
     if (currentPage >= totalPages) {
       loadMoreBtn.disabled = true;
-      iziToast.success({
-        titleColor: 'white',
-        position: 'topRight',
-        title: 'OK',
-        backgroundColor: 'green',
-        messageColor: 'white',
-        message: 'Десерти завантажено',
-      });
+
+      showSuccess('Десерти завантажено');
     } else {
       loadMoreBtn.disabled = false;
     }
   } catch (error) {
-    console.error(error);
-    iziToast.error({
-      titleColor: 'white',
-      position: 'topRight',
-      title: 'Error',
-      backgroundColor: 'red',
-      messageColor: 'white',
-      message: 'Something went wrong. Please try again later.',
-    });
+    showError('Помилка завантаження');
   } finally {
     hideLoader();
   }
@@ -176,17 +144,16 @@ async function loadMoreDesserts() {
     const totalPages = Math.ceil(data.totalItems / LIMIT);
 
     loadMoreBtn.classList.remove('is-hidden');
-    loadMoreBtn.disabled = currentPage >= totalPages;
+    // loadMoreBtn.disabled = currentPage >= totalPages;
+    if (currentPage >= totalPages) {
+      loadMoreBtn.disabled = true;
+
+      showSuccess('Десерти завантажено');
+    } else {
+      loadMoreBtn.disabled = false;
+    }
   } catch (error) {
-    console.error(error);
-    iziToast.error({
-      titleColor: 'white',
-      position: 'topRight',
-      title: 'Error',
-      backgroundColor: 'red',
-      messageColor: 'white',
-      message: 'Something went wrong. Please try again later.',
-    });
+    showError('Помилка завантаження');
   } finally {
     hideLoader();
   }
@@ -202,6 +169,7 @@ function openDessertModal(event) {
   // openModal(id);
 }
 
+//RENDER
 function renderSelect(arr) {
   const markup = arr
     .map(
@@ -252,17 +220,7 @@ function renderDesserts(arr) {
     .join('');
   dessertContainer.insertAdjacentHTML('beforeend', markup);
 }
-select.addEventListener('mousedown', () => {
-  wrapper.classList.add('is-open');
-});
 
-select.addEventListener('change', () => {
-  wrapper.classList.remove('is-open');
-});
-
-select.addEventListener('blur', () => {
-  wrapper.classList.remove('is-open');
-});
 function showLoader() {
   loader.classList.remove('is-hidden');
 }
@@ -275,4 +233,37 @@ function showLoadMoreBtn() {
 
 function hideLoadMoreBtn() {
   loadMoreBtn.classList.add('is-hidden');
+}
+
+//SELECT
+select.addEventListener('mousedown', () => {
+  wrapper.classList.add('is-open');
+});
+
+select.addEventListener('change', () => {
+  wrapper.classList.remove('is-open');
+});
+
+select.addEventListener('blur', () => {
+  wrapper.classList.remove('is-open');
+});
+
+//IZI TOAST
+function showSuccess(message) {
+  iziToast.success({
+    title: 'OK',
+    message,
+    // theme: 'dark',
+    backgroundColor: '#ebfcfb',
+    position: 'topLeft',
+  });
+}
+
+function showError(message) {
+  iziToast.error({
+    // title: 'Error',
+    message,
+    theme: 'dark',
+    backgroundColor: '#c07979',
+  });
 }

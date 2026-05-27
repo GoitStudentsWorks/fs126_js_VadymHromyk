@@ -164,7 +164,7 @@ function openDessertModal(event) {
   if (!card) return;
   const id = card.dataset.id;
 
-  // openModal(id);
+  openModal(id);
 }
 
 //RENDER

@@ -74,6 +74,10 @@
   .hero-container {
     max-width: 704px;
   }
+  .hero-btn {
+    width: auto;
+
+  }
 
  
 }
@@ -92,6 +96,12 @@
   .hero-btn:focus-visible{
     outline: 2px solid #000;
   }
+  .hero-btn {
+    width: auto;
+  }
+  .hero-title {
+    font-size: 56px;
+  }
 }
 
 
@@ -109,14 +119,10 @@
 }
 
 
-@media (min-width: 1440px) {
-  .hero-title {
-    font-size: 56px;
-  }
-}
+
 @media (max-width: 767px) {
   .hero-btn {
-    width: 100%;       /* Кнопка на весь екран на телефоні */
-    max-width: 300px;  /* Обмеження ширини на телефоні */
+    width: 100%;       
+    max-width: 300px;  
   }
 }

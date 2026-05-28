@@ -25,10 +25,9 @@
 .modal {
   position: absolute;
   background-color: #f5fdfd;
-  width: 100%;
   max-width: 335px;
   height: 711px;
-  max-height: calc(100vh - 128px);
+  max-height: 90vh;
   padding: 64px 20px;
   border-radius: 16px;
   display: flex;
@@ -79,7 +78,7 @@
   border-radius: 16px;
   overflow: hidden;
   width: 295px;
-  height: 221px;
+  min-height: 221px;
   margin-bottom: 24px;
 }
 
@@ -242,8 +241,8 @@
 
   .modal {
     padding: 64px 32px;
-    max-width: 704px;
-    height: 960px;
+    min-width: 704px;
+    min-height: 960px;
     max-height: calc(100vh - 128px);
   }
 
@@ -267,8 +266,8 @@
 
   .modal {
     flex-direction: row;
-    max-width: 1312px;
-    height: 611px;
+    min-width: 1312px;
+    min-height: 611px;
     max-height: calc(100vh - 128px);
     padding: 64px;
     gap: 24px;

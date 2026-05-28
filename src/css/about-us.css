@@ -237,3 +237,10 @@
     transform: translateX(50%) scale(0.93);
   }
 }
+
+#feedback .gallery__pagination {
+  width: 100% !important;
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+}

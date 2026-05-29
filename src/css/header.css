@@ -67,6 +67,7 @@
 .mobile-nav-list {
   display: flex;
   flex-direction: column;
+  text-align: center;
   gap: 27px;
   margin-top: 28px;
   margin-bottom: 31px;

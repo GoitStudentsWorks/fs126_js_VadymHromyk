@@ -203,7 +203,7 @@ function renderDesserts(arr) {
       ({ name, _id, image, price, category, description }) => `
   <li class="dessert-list-item" data-id="${_id}">
         <div class="dessert-list-wrapper">
-          <img class="dessert-list-img" src="${image}" alt="${name}">
+          <img class="dessert-list-img" src="${image}" alt="${name}" loading="lazy">
         </div>
         <p class="dessert-list-category">${category.name}</p>
         <h3 class="dessert-list-product">${name}</h3>

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/project-codex133/",
+    "build": "vite build --base=/fs126_js_VadymHromyk/",
     "preview": "vite preview"
   },
   "devDependencies": {
